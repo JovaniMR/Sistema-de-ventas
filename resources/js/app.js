@@ -35,9 +35,15 @@ Vue.component('footer-component', require('./components/plantilla/Footer.vue').d
  * Configuration Vue-Router
  */
 
-import VueRouter from 'vue-router';
 
+import VueRouter from 'vue-router'; //Rutas
+import ElementUI from 'element-ui'; //Diseños de element
+import 'element-ui/lib/theme-chalk/index.css';
+import VuePaginate from 'vue-paginate'; //Paginar
+
+window.Vue.use(ElementUI);
 Vue.use(VueRouter);
+window.Vue.use(VuePaginate);
 
 const router = new VueRouter({
    routes:[
@@ -52,7 +58,8 @@ const router = new VueRouter({
        {path:'/permisos' ,component: require('./components/modulos/permisos/index.vue').default}
 
    ],
-   mode: 'history'
+   mode: 'history',
+   linkActiveClass:'active'
 });
 
 

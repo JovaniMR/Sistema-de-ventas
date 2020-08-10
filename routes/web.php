@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{optional?}', function () {
     return view('app');
 })->name('base');
+
+//Users Routes
+Route::resource('/usuarios','administracion\UsersController');
+Route::get('/usuario/busca','administracion\UsersController@getBuscaUsuario');

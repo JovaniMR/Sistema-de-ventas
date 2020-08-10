@@ -31106,3 +31106,8 @@ a.text-muted:hover {
   color: #ffffff;
 }
 /*# sourceMappingURL=adminlte.css.map */
+.select{
+  height: 25px;
+  width: 100%;    
+}
+

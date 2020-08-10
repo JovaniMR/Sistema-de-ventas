@@ -15,7 +15,8 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .styles([
         'resources/vendor/css/adminlte.min.css',
-        'resources/vendor/css/adminlte.css'
+        'resources/vendor/css/adminlte.css',
+        'resources/vendor/css/general.css'
     ], 'public/css/plantilla.css')
     .scripts([
         'resources/vendor/js/adminlte.js',

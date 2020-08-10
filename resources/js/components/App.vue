@@ -15,7 +15,7 @@
         enter-active-class="animated slideInRight"
         leave-active-class="animated slideOutRight">
            
-          <router-view style="animation-duration: 0.99s"></router-view>
+          <router-view style="animation-duration: 0.80s"></router-view>
         </transition>
       </div>
   <!-- /.content-wrapper -->

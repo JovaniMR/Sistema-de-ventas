@@ -98,9 +98,9 @@
             </ul>
           </li>
 
-          <li class="nav-header">CONFIGURACIÒN</li>
+          <li class="nav-header">CONFIGURACIÓN</li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/">
+            <router-link class="nav-link" to="#">
              <i class="nav-icon fas fa-sitemap"></i>
               <p>Categorias</p>
             </router-link>
@@ -111,7 +111,7 @@
               <p>Producto</p>
             </router-link>
           </li>
-          <li class="nav-header">ADMINISTRACIÒN</li>
+          <li class="nav-header">ADMINISTRACIÓN</li>
           <li class="nav-item">
             <router-link class="nav-link" to="/usuarios">
               <i class="fas fa-users"></i>
