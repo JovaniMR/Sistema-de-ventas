@@ -13,10 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/{optional?}', function () {
     return view('app');
 })->name('base');
 
 //Users Routes
+Route::get('/usuarios/busca','administracion\UsersController@getBuscaUsuario');
 Route::resource('/usuarios','administracion\UsersController');
-Route::get('/usuario/busca','administracion\UsersController@getBuscaUsuario');
+Route::get('/files/busca','administracion\FilesController@buscaFoto');
+Route::resource('/files','administracion\FilesController');
+
+
+
+
+
+
+
+
+

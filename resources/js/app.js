@@ -55,8 +55,10 @@ const router = new VueRouter({
        {path:'/reportes' ,component: require('./components/modulos/reportes/index.vue').default},
        {path:'/usuarios' ,component: require('./components/modulos/usuarios/index.vue').default},
        {path:'/roles' ,component: require('./components/modulos/roles/index.vue').default},
-       {path:'/permisos' ,component: require('./components/modulos/permisos/index.vue').default}
+       {path:'/permisos' ,component: require('./components/modulos/permisos/index.vue').default},
 
+       //Usuarios
+        {path:'/usuarios/crear',component: require('./components/modulos/usuarios/create.vue').default}
    ],
    mode: 'history',
    linkActiveClass:'active'

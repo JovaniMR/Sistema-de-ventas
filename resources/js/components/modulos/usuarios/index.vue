@@ -16,7 +16,7 @@
            <div class="col-lg-12">
                 <div class="card">
                   <div class="card-header">
-                        <router-link class=" btn btn-primary" to="" >
+                        <router-link class=" btn btn-primary" to="/usuarios/crear" >
                             <span class="fas fa-plus-square"></span> Nuevo usuario</router-link>
                   </div>
                   <div class="card-body">
@@ -73,7 +73,7 @@
                                    <thead>
                                       <tr>
                                         <!-- <th scope="col">Fotografía</th> -->
-                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Foto</th>
                                         <th scope="col">Correo</th>
                                         <th scope="col">Usuario</th>
                                         <th scope="col">Estado</th>
@@ -82,7 +82,8 @@
                                     </thead>
                                     <paginate name="listUsuarios" :list="listUsuarios" :per="5" tag="tbody">
                                       <tr v-for="user in paginated('listUsuarios')" :key="user.id">
-                                        <!-- <th scope="row">{{ user.id }}</th> -->
+                                        
+                                        <td><img style="width:30px" :src="user.path" alt=""></td>
                                         <td>{{ user.name }}</td>
                                         <td>{{ user.email }}</td>
                                         <td>{{ user.username }}</td>
@@ -92,7 +93,7 @@
                                         <span v-else class="badge badge-danger">Inactivo</span>
                                         </td>
                                         <td>
-                                            <router-link class="btn btn-info btn-sm " to="">
+                                            <router-link class="btn btn-info btn-sm" to="">
                                                 <span class="fas fa-folder"></span> Ver
                                             </router-link>
                                             <router-link class="btn btn-primary btn-sm " to="">
@@ -101,10 +102,10 @@
                                             <router-link class="btn btn-warning btn-sm " to="">
                                                 <span class="fas fa-key"></span> Permisos
                                             </router-link>
-                                            <router-link class="btn btn-danger btn-sm " to="">
+                                            <router-link v-if="user.state == 'A'" class="btn btn-danger btn-sm " to="">
                                                 <span class="fas fa-trash"></span> Desactivar
                                             </router-link>
-                                            <router-link class="btn btn-success btn-sm " to="">
+                                            <router-link v-else class="btn btn-success btn-sm " to="">
                                                 <span class="fas fa-check"></span> Activar
                                             </router-link>
                                         </td>
@@ -157,7 +158,7 @@ export default {
           this.fillBusqueda.Estado=''
         },
         BuscaUsuario(){
-          var url ='/usuario/busca';
+          var url ='/usuarios/busca';
           axios.get(url,{
             params:{
               nombre :  this.fillBusqueda.Nombre,
@@ -166,7 +167,7 @@ export default {
               estado:   this.fillBusqueda.Estado
             }
           }).then(response=>{
-            this.listUsuarios = response.data;
+             this.listUsuarios = response.data;
           });
 
           this.limpiarCriteriosBsq();

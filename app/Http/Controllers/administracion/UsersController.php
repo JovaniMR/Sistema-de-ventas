@@ -5,6 +5,8 @@ namespace App\Http\Controllers\administracion;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -36,7 +38,19 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        $user = new User();
+
+        $user->firstname = $request->firstname;
+        $user->secondname = $request->secondname;
+        $user->lastname = $request->lastname;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->created_by = 1;
+        $user->updated_by = 1;
+        $user->file_id = $request->idFile;
        
+        $user->save();
     }
 
     /**
@@ -92,13 +106,16 @@ class UsersController extends Controller
         $correo = $request->correo;
         $estado = $request->estado;
 
-        $usuarios = DB::select("SELECT concat(firstname,' ',secondname ) AS name, email, username, state
-                               FROM users
-                               WHERE firstname LIKE '%$nombre%' 
-                               AND email LIKE '%$correo%'
-                               AND username LIKE '%$usuario%'
-                               AND state LIKE '%$estado%' ");
+        $usuarios = DB::select("SELECT concat(u.firstname,' ',u.secondname ) AS name, u.email, u.username, u.state, f.path
+                               FROM users u
+                               INNER JOIN files f ON u.file_id = f.id 
+                               WHERE u.firstname LIKE '%$nombre%' 
+                               AND u.email LIKE '%$correo%'
+                               AND u.username LIKE '%$usuario%'
+                               AND u.state LIKE '%$estado%' ");
 
         return $usuarios;
     }
+
+
 }

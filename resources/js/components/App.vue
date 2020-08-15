@@ -11,12 +11,12 @@
 
   <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <transition
+        <!-- <transition
         enter-active-class="animated slideInRight"
-        leave-active-class="animated slideOutRight">
+        leave-active-class="animated slideOutRight"> -->
            
-          <router-view style="animation-duration: 0.80s"></router-view>
-        </transition>
+          <router-view></router-view>
+        <!-- </transition> -->
       </div>
   <!-- /.content-wrapper -->
 
