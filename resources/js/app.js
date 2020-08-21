@@ -40,10 +40,12 @@ import VueRouter from 'vue-router'; //Rutas
 import ElementUI from 'element-ui'; //Diseños de element
 import 'element-ui/lib/theme-chalk/index.css';
 import VuePaginate from 'vue-paginate'; //Paginar
+import Swal from 'sweetalert2' //alertas
 
-window.Vue.use(ElementUI);
 Vue.use(VueRouter);
+window.Vue.use(ElementUI);
 window.Vue.use(VuePaginate);
+window.Swal = Swal;
 
 const router = new VueRouter({
    routes:[
@@ -58,7 +60,11 @@ const router = new VueRouter({
        {path:'/permisos' ,component: require('./components/modulos/permisos/index.vue').default},
 
        //Usuarios
-        {path:'/usuarios/crear',component: require('./components/modulos/usuarios/create.vue').default}
+        {path:'/usuarios/crear',component: require('./components/modulos/usuarios/create.vue').default},
+        {path:'/usuarios/editar/:id',
+         name:'usuarios.editar',
+         component: require('./components/modulos/usuarios/edit.vue').default,
+         props: true}
    ],
    mode: 'history',
    linkActiveClass:'active'

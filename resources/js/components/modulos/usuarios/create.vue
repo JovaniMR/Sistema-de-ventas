@@ -17,7 +17,7 @@
                 <div class="card">
                   <div class="card-header">
                         <router-link class=" btn btn-primary" to="/usuarios" >
-                            <span class="fas fa-plus-square"></span> Regresar</router-link>
+                            <span class="fas fa-arrow-left"></span> Regresar</router-link>
                   </div>
                   <div class="card-body">
                       <!-- Card formulario busqueda -->

@@ -53,16 +53,7 @@ class UsersController extends Controller
         $user->save();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -84,7 +75,22 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $user = User::findOrFail($id);
+
+         $user->firstname = $request->firstname;
+         $user->secondname = $request->secondname;
+         $user->lastname = $request->lastname;
+         $user->username = $request->username;
+         $user->email = $request->email;
+        
+         if($request->password != ''){
+           $user->password = Hash::make($request->password);
+         }
+    
+         $user->file_id = $request->idFile;
+       
+         $user->update();
     }
 
     /**
@@ -106,7 +112,7 @@ class UsersController extends Controller
         $correo = $request->correo;
         $estado = $request->estado;
 
-        $usuarios = DB::select("SELECT concat(u.firstname,' ',u.secondname ) AS name, u.email, u.username, u.state, f.path
+        $usuarios = DB::select("SELECT u.id, concat(u.firstname,' ',u.secondname ) AS name, u.email, u.username, u.state, f.path
                                FROM users u
                                INNER JOIN files f ON u.file_id = f.id 
                                WHERE u.firstname LIKE '%$nombre%' 
@@ -117,5 +123,22 @@ class UsersController extends Controller
         return $usuarios;
     }
 
+    public function getUserById(Request $request){
+    
+        $id = $request->id;
 
+        $user = User::findOrFail($id);
+
+        return $user;
+    }
+
+    public function cambiarEstado(Request $request, $id){
+       
+        $user = User::findOrFail($id);
+
+        $user->state = $request->state;
+
+        $user->update();
+
+    }
 }

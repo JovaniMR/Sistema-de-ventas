@@ -21,7 +21,11 @@ Route::get('/{optional?}', function () {
 
 //Users Routes
 Route::get('/usuarios/busca','administracion\UsersController@getBuscaUsuario');
+Route::get('/usuarios/obtener','administracion\UsersController@getUserById');
+Route::put('/usuarios/estado/{id}','administracion\UsersController@cambiarEstado');
 Route::resource('/usuarios','administracion\UsersController');
+
+//Files
 Route::get('/files/busca','administracion\FilesController@buscaFoto');
 Route::resource('/files','administracion\FilesController');
 
