@@ -115,7 +115,7 @@
                           <span v-else class="badge badge-danger">Inactivo</span>
                         </td>
                         <td>
-                          <router-link class="btn btn-info btn-sm" to>
+                          <router-link class="btn btn-info btn-sm" :to="{name:'usuarios.ver', params:{id: user.id}}">
                             <span class="fas fa-folder"></span> Ver
                           </router-link>
                           <router-link

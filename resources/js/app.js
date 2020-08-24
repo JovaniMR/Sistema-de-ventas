@@ -64,6 +64,10 @@ const router = new VueRouter({
         {path:'/usuarios/editar/:id',
          name:'usuarios.editar',
          component: require('./components/modulos/usuarios/edit.vue').default,
+         props: true},
+        {path:'/usuarios/ver/:id',
+         name:'usuarios.ver',
+         component: require('./components/modulos/usuarios/view.vue').default,
          props: true}
    ],
    mode: 'history',
