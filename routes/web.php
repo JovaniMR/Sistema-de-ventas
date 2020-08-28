@@ -29,7 +29,12 @@ Route::resource('/usuarios','administracion\UsersController');
 Route::get('/files/busca','administracion\FilesController@buscaFoto');
 Route::resource('/files','administracion\FilesController');
 
+//Roles
 
+Route::get('/roles/busca','administracion\RolesController@getBuscaRoles');
+Route::get('/roles/obtener','administracion\RolesController@getRolById');
+Route::get('/roles/permisos','administracion\RolesController@getPermisosByRol');
+Route::resource('/roles','administracion\RolesController');
 
 
 

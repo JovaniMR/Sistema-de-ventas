@@ -61,8 +61,10 @@
         <div class="card">
           <div class="card-header p-2">
             <ul class="nav nav-pills">
-              <li class="nav-item">
-                <a class="nav-link active" href="#settings" data-toggle="tab">Información Personal</a>
+              <li class="nav-item ml-auto mr-3" >
+                  <router-link class="btn btn-primary" to="/usuarios">
+                    <span class="fas fa-arrow-left"></span> Regresar
+                  </router-link>
               </li>
             </ul>
           </div>

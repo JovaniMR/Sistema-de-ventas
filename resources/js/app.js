@@ -68,7 +68,14 @@ const router = new VueRouter({
         {path:'/usuarios/ver/:id',
          name:'usuarios.ver',
          component: require('./components/modulos/usuarios/view.vue').default,
-         props: true}
+         props: true},
+
+      //Roles
+        {path:'/roles/crear',component: require('./components/modulos/roles/create.vue').default}, 
+        {path:'/roles/edit/:id',
+        name:'roles.editar',
+        component: require('./components/modulos/roles/edit.vue').default,
+        props:true}   
    ],
    mode: 'history',
    linkActiveClass:'active'
