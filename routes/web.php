@@ -33,7 +33,9 @@ Route::resource('/files','administracion\FilesController');
 
 Route::get('/roles/busca','administracion\RolesController@getBuscaRoles');
 Route::get('/roles/obtener','administracion\RolesController@getRolById');
-Route::get('/roles/permisos','administracion\RolesController@getPermisosByRol');
+Route::get('/roles/permisos','administracion\RolesController@getListarPermisosByRol');
+Route::get('/roles/getPermisos','administracion\RolesController@getPermisosByRol');
+Route::get('/roles/getRolAndPermissions','administracion\RolesController@getRolAndPermissions');
 Route::resource('/roles','administracion\RolesController');
 
 

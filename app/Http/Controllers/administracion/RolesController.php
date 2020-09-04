@@ -120,10 +120,37 @@ class RolesController extends Controller
         return $rol;
     }
 
-    public function getPermisosByRol(){
+    public function getListarPermisosByRol(){
 
         $permissions = DB::select("SELECT * FROM permissions");
 
         return $permissions;
     }
+
+    public function getPermisosByRol(Request $request){
+
+        $id = $request->id;
+
+        $permissions = DB::select("SELECT p.*, CASE IFNULL (rp.roles_id,'') WHEN '' THEN 0 ELSE 1 END checked 
+        FROM permissions p 
+        LEFT OUTER JOIN roles_permissions rp ON rp.permissions_id= p.id 
+        AND rp.roles_id = $id");                        
+
+        return $permissions;
+    }
+
+    public function getRolAndPermissions(Request $request){
+
+        $id = $request->id;
+
+        $permissions = DB::select("SELECT p.*
+                                   FROM permissions p 
+                                   INNER JOIN roles_permissions rp ON rp.permissions_id= p.id 
+                                   WHERE rp.roles_id = $id");                        
+
+        return $permissions;
+    }
+
+
+
 }

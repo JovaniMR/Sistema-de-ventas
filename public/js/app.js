@@ -3839,45 +3839,113 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       rol: {
         id: this.$attrs.id,
-        nombre: '',
-        slug: ''
-      }
+        nombre: "",
+        slug: ""
+      },
+      listPermissions: [],
+      selectedPermissions: []
     };
   },
   mounted: function mounted() {
     this.getRolById();
+    this.getPermisosByRol();
   },
   methods: {
     getRolById: function getRolById() {
       var _this = this;
 
-      axios.get('/roles/obtener', {
+      axios.get("/roles/obtener", {
         params: {
-          'id': this.rol.id
+          id: this.rol.id
         }
       }).then(function (response) {
         _this.rol.nombre = response.data[0].name;
         _this.rol.slug = response.data[0].slug;
       });
     },
+    getPermisosByRol: function getPermisosByRol() {
+      var _this2 = this;
+
+      axios.get('/roles/getPermisos', {
+        params: {
+          id: this.rol.id
+        }
+      }).then(function (response) {
+        _this2.listPermissions = response.data;
+
+        _this2.seleccionarPermisos();
+      });
+    },
+    seleccionarPermisos: function seleccionarPermisos() {
+      var me = this;
+      me.listPermissions.map(function (obj, position) {
+        me.selectedPermissions.push({
+          id: obj.id,
+          name: obj.name,
+          slug: obj.slug,
+          checked: obj.checked == 1 ? true : false
+        });
+      });
+    },
     guardarRol: function guardarRol() {
       axios.put("/roles/".concat(this.rol.id), {
-        'name': this.rol.nombre,
-        'slug': this.rol.slug
+        name: this.rol.nombre,
+        slug: this.rol.slug
       }).then(function (response) {
         Swal.fire({
-          icon: 'success',
-          title: 'Rol actualizado correctamente',
+          icon: "success",
+          title: "Rol actualizado correctamente",
           showConfirmButton: false,
           timer: 1500
         });
       });
-      this.$router.push('/roles');
+      this.$router.push("/roles");
     }
   }
 });
@@ -4006,25 +4074,109 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      fillBusqueda: {
-        nombre: '',
+      rol: {
+        name: '',
         slug: ''
       },
+      fillBusqueda: {
+        nombre: "",
+        slug: ""
+      },
       listRoles: [],
-      paginate: ['listRoles']
+      paginate: ["listRoles"],
+      listPermissionsByRol: []
     };
   },
   methods: {
     limpiarCriteriosBsq: function limpiarCriteriosBsq() {
-      this.fillBusqueda.nombre = '', this.fillBusqueda.slug = '';
+      this.fillBusqueda.nombre = "", this.fillBusqueda.slug = "";
     },
     buscaRol: function buscaRol() {
       var _this = this;
 
-      var url = '/roles/busca';
+      var url = "/roles/busca";
       axios.get(url, {
         params: {
           nombre: this.fillBusqueda.nombre,
@@ -4034,6 +4186,20 @@ __webpack_require__.r(__webpack_exports__);
         _this.listRoles = response.data;
       });
       this.limpiarCriteriosBsq();
+    },
+    //metodos del Modal (Ver)
+    verRol: function verRol(idRol, rolName, rolSlug) {
+      var _this2 = this;
+
+      this.rol.name = rolName;
+      this.rol.slug = rolSlug;
+      axios.get('/roles/getRolAndPermissions', {
+        params: {
+          'id': idRol
+        }
+      }).then(function (response) {
+        _this2.listPermissionsByRol = response.data;
+      });
     }
   }
 });
@@ -106205,85 +106371,185 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "card" }, [
-                _c("form", { attrs: { action: "" } }, [
-                  _c("h5", { staticClass: "card-header bg-info" }, [
-                    _vm._v("Editar rol")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-body" }, [
-                    _c("div", { staticClass: "row justify-content-center" }, [
-                      _c("div", { staticClass: "col-5" }, [
-                        _c("label", { attrs: { for: "" } }, [_vm._v("Nombre")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.rol.nombre,
-                              expression: "rol.nombre"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          staticStyle: { height: "30px" },
-                          attrs: { type: "text", required: "" },
-                          domProps: { value: _vm.rol.nombre },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.rol, "nombre", $event.target.value)
-                            }
-                          }
-                        })
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c("div", { staticClass: "card" }, [
+                    _c("form", { attrs: { action: "" } }, [
+                      _c("h5", { staticClass: "card-header bg-info" }, [
+                        _vm._v("Información del rol")
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-5" }, [
-                        _c("label", { attrs: { for: "" } }, [_vm._v("Url")]),
+                      _c("div", { staticClass: "card-body" }, [
+                        _c(
+                          "div",
+                          { staticClass: "row justify-content-center" },
+                          [
+                            _c("div", { staticClass: "col" }, [
+                              _c("label", { attrs: { for: "" } }, [
+                                _vm._v("Nombre")
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.rol.nombre,
+                                    expression: "rol.nombre"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                staticStyle: { height: "30px" },
+                                attrs: { type: "text", required: "" },
+                                domProps: { value: _vm.rol.nombre },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.rol,
+                                      "nombre",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]
+                        ),
                         _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.rol.slug,
-                              expression: "rol.slug"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          staticStyle: { height: "30px" },
-                          attrs: { type: "text", required: "" },
-                          domProps: { value: _vm.rol.slug },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.rol, "slug", $event.target.value)
-                            }
-                          }
-                        })
+                        _c(
+                          "div",
+                          { staticClass: "row justify-content-center" },
+                          [
+                            _c("div", { staticClass: "col" }, [
+                              _c("label", { attrs: { for: "" } }, [
+                                _vm._v("Url")
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.rol.slug,
+                                    expression: "rol.slug"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                staticStyle: { height: "30px" },
+                                attrs: { type: "text", required: "" },
+                                domProps: { value: _vm.rol.slug },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.rol,
+                                      "slug",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card-footer" }, [
+                        _c(
+                          "div",
+                          { staticClass: "row justify-content-center" },
+                          [
+                            _c("div", { staticClass: "col-7" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-sm btn-primary",
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.guardarRol($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Guardar rol")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-sm btn-warning",
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.limpiarCampos($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Limpiar")]
+                              )
+                            ])
+                          ]
+                        )
                       ])
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-footer" }, [
-                    _c("div", { staticClass: "row justify-content-center" }, [
-                      _c("div", { staticClass: "col-2" }, [
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-7" }, [
+                  _c("div", { staticClass: "card" }, [
+                    _c("h5", { staticClass: "card-header bg-info" }, [
+                      _vm._v("Permisos")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("table", { staticClass: "table table-hover" }, [
+                        _vm._m(1),
+                        _vm._v(" "),
                         _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-primary",
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.guardarRol($event)
-                              }
-                            }
-                          },
-                          [_vm._v("Modificar el rol")]
+                          "tbody",
+                          _vm._l(_vm.selectedPermissions, function(permission) {
+                            return _c(
+                              "tr",
+                              {
+                                key: permission.id,
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.marcarFila(permission.id - 1)
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "th",
+                                  { attrs: { scope: "row " } },
+                                  [
+                                    _c("el-checkbox", {
+                                      attrs: { type: "checkbox" },
+                                      model: {
+                                        value: permission.checked,
+                                        callback: function($$v) {
+                                          _vm.$set(permission, "checked", $$v)
+                                        },
+                                        expression: "permission.checked"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(permission.name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(permission.slug))])
+                              ]
+                            )
+                          }),
+                          0
                         )
                       ])
                     ])
@@ -106307,6 +106573,20 @@ var staticRenderFns = [
         _c("div", { staticClass: "col-sm-6" }, [
           _c("h1", { staticClass: "m-0 text-dark" }, [_vm._v("Rol")])
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("URL amigable")])
       ])
     ])
   }
@@ -106499,13 +106779,21 @@ var render = function() {
                               "td",
                               [
                                 _c(
-                                  "router-link",
+                                  "button",
                                   {
                                     staticClass: "btn btn-info btn-sm",
                                     attrs: {
-                                      to: {
-                                        name: "usuarios.ver",
-                                        params: { id: rol.id }
+                                      type: "button",
+                                      "data-toggle": "modal",
+                                      "data-target": "#exampleModal"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.verRol(
+                                          rol.id,
+                                          rol.name,
+                                          rol.slug
+                                        )
                                       }
                                     }
                                   },
@@ -106513,7 +106801,9 @@ var render = function() {
                                     _c("span", {
                                       staticClass: "fas fa-folder"
                                     }),
-                                    _vm._v(" Ver\n                        ")
+                                    _vm._v(
+                                      "\n                          Ver\n                        "
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
@@ -106573,7 +106863,167 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "exampleModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("form", { attrs: { action: "" } }, [
+                        _c("h5", { staticClass: "card-header bg-info" }, [
+                          _vm._v("Información del rol")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "card-body" }, [
+                          _c(
+                            "div",
+                            { staticClass: "row justify-content-center" },
+                            [
+                              _c("div", { staticClass: "col" }, [
+                                _c("label", { attrs: { for: "" } }, [
+                                  _vm._v("Nombre")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.rol.name,
+                                      expression: "rol.name"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  staticStyle: { height: "30px" },
+                                  attrs: { type: "text", disabled: "" },
+                                  domProps: { value: _vm.rol.name },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.rol,
+                                        "name",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "row justify-content-center" },
+                            [
+                              _c("div", { staticClass: "col" }, [
+                                _c("label", { attrs: { for: "" } }, [
+                                  _vm._v("Url")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.rol.slug,
+                                      expression: "rol.slug"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  staticStyle: { height: "30px" },
+                                  attrs: { type: "text", disabled: "" },
+                                  domProps: { value: _vm.rol.slug },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.rol,
+                                        "slug",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("h5", { staticClass: "card-header bg-info" }, [
+                        _vm._v("Permisos")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card-body" }, [
+                        _c(
+                          "div",
+                          {
+                            staticStyle: {
+                              "max-height": "200px !important",
+                              overflow: "auto !important"
+                            }
+                          },
+                          [
+                            _c("table", { staticClass: "table" }, [
+                              _vm._m(2),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.listPermissionsByRol, function(
+                                  permission
+                                ) {
+                                  return _c("tr", { key: permission.id }, [
+                                    _c("td", [_vm._v(_vm._s(permission.name))]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(permission.slug))])
+                                  ])
+                                }),
+                                0
+                              )
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -106601,6 +107051,33 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Acciones")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("URL amigable")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Cerrar")]
+      )
     ])
   }
 ]

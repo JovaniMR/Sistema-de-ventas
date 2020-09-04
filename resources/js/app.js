@@ -75,7 +75,8 @@ const router = new VueRouter({
         {path:'/roles/edit/:id',
         name:'roles.editar',
         component: require('./components/modulos/roles/edit.vue').default,
-        props:true}   
+        props:true}
+       
    ],
    mode: 'history',
    linkActiveClass:'active'

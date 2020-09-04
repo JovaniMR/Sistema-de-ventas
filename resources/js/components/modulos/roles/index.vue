@@ -64,7 +64,7 @@
                 <h5 class="card-header bg-info">Resultados</h5>
                 <div class="card-body">
                   <table class="table text-center">
-                    <thead >
+                    <thead>
                       <tr>
                         <!-- <th scope="col">Fotografía</th> -->
                         <th scope="col">Nombre</th>
@@ -74,13 +74,20 @@
                     </thead>
                     <paginate name="listRoles" :list="listRoles" :per="5" tag="tbody">
                       <tr v-for="rol in paginated('listRoles')" :key="rol.id">
-
                         <td>{{ rol.name }}</td>
                         <td>{{ rol.slug }}</td>
                         <td>
-                          <router-link class="btn btn-info btn-sm" :to="{name:'usuarios.ver', params:{id: rol.id}}">
-                            <span class="fas fa-folder"></span> Ver
-                          </router-link>
+                          <!-- Button trigger modal -->
+                          <button
+                            type="button"
+                            class="btn btn-info btn-sm"
+                            data-toggle="modal"
+                            data-target="#exampleModal"
+                            @click="verRol(rol.id,rol.name,rol.slug)"
+                          ><span class="fas fa-folder"></span>
+                            Ver
+                          </button>
+
                           <router-link
                             class="btn btn-primary btn-sm"
                             :to="{name:'roles.editar', params:{id: rol.id}}"
@@ -108,39 +115,133 @@
         </div>
       </div>
     </div>
+
+    <!-- Información del modal -->
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="row">
+              <!-- Card formulario busqueda -->
+              <div class="col">
+                <div class="card">
+                  <form action>
+                    <h5 class="card-header bg-info">Información del rol</h5>
+                    <div class="card-body">
+                      <div class="row justify-content-center">
+                        <div class="col">
+                          <label for>Nombre</label>
+                          <input type="text" class="form-control" disabled style="height:30px"  v-model="rol.name"/>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col">
+                          <label for>Url</label>
+                          <input type="text" class="form-control" disabled style="height:30px"  v-model="rol.slug"/>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <!-- Card lista permisos -->
+                <div class="card">
+                  <h5 class="card-header bg-info">Permisos</h5>
+                  <div class="card-body">
+                    <div style="max-height: 200px !important; overflow: auto !important">
+                      <table class="table" >
+                        <thead>
+                          <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">URL amigable</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="permission in listPermissionsByRol" :key="permission.id">
+                            <td >{{ permission.name }}</td>
+                            <td>{{ permission.slug }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-   data() {
+  data() {
     return {
-      fillBusqueda: {
-        nombre:'',
+      rol:{
+        name:'',
         slug:''
       },
+      fillBusqueda: {
+        nombre: "",
+        slug: "",
+      },
       listRoles: [],
-      paginate: ['listRoles'],
-    }
-   },
-    methods: {
-        limpiarCriteriosBsq(){
-          this.fillBusqueda.nombre ='',
-          this.fillBusqueda.slug =''
-        },
-        buscaRol(){
-          var url ='/roles/busca';
-          axios.get(url,{
-            params:{
-              nombre :  this.fillBusqueda.nombre,
-              slug:  this.fillBusqueda.slug
-            }
-          }).then(response=>{
-             this.listRoles = response.data;
-          });
+      paginate: ["listRoles"],
+      listPermissionsByRol:[]
+    };
+  },
+  methods: {
+    limpiarCriteriosBsq() {
+      (this.fillBusqueda.nombre = ""), (this.fillBusqueda.slug = "");
+    },
+    buscaRol() {
+      var url = "/roles/busca";
+      axios
+        .get(url, {
+          params: {
+            nombre: this.fillBusqueda.nombre,
+            slug: this.fillBusqueda.slug,
+          },
+        })
+        .then((response) => {
+          this.listRoles = response.data;
+        });
 
-          this.limpiarCriteriosBsq();
+      this.limpiarCriteriosBsq();
+    },
+
+    //metodos del Modal (Ver)
+
+    verRol(idRol,rolName,rolSlug){
+
+      this.rol.name = rolName; 
+      this.rol.slug = rolSlug; 
+
+      axios.get('/roles/getRolAndPermissions', {
+        params: {
+          'id': idRol
         }
+        }).then(response => {
+          this.listPermissionsByRol = response.data;
+        });
     }
-}
+  },
+};
 </script>
