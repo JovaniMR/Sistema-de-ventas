@@ -128,6 +128,13 @@ export default {
         name: this.rol.name,
         slug: this.rol.slug,
         listPermissions: this.selectedPermissions
+      }).then(response =>{
+         Swal.fire({
+              icon: 'success',
+              title: 'Rol registrado correctamente',
+              showConfirmButton: false,
+              timer: 1500
+            })
       });
 
       this.$router.push("/roles");

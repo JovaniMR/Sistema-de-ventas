@@ -77,6 +77,8 @@ const router = new VueRouter({
         component: require('./components/modulos/roles/edit.vue').default,
         props:true}
        
+      //Permisos
+
    ],
    mode: 'history',
    linkActiveClass:'active'

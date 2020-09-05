@@ -38,7 +38,11 @@ Route::get('/roles/getPermisos','administracion\RolesController@getPermisosByRol
 Route::get('/roles/getRolAndPermissions','administracion\RolesController@getRolAndPermissions');
 Route::resource('/roles','administracion\RolesController');
 
+//Permisos
 
+Route::get('/permisos/busca','administracion\PermissionsController@getBuscaPermisos');
+Route::get('/permisos/buscaId','administracion\PermissionsController@getBuscaPermisoById');
+Route::resource('/permisos','administracion\PermissionsController');
 
 
 
